@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/common/Navbar';
-import { Footer } from '@/components/common/Footer';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -48,8 +47,6 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         {children}
       </motion.main>
 
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };
