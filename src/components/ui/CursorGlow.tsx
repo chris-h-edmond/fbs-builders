@@ -37,7 +37,7 @@ export const CursorGlow: React.FC = () => {
       style={{
         width: 40,
         height: 40,
-        border: '2px solid #8786db',
+        border: '2px solid #ffffffff',
         backgroundColor: 'transparent',
       }}
     />
