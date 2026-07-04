@@ -1,0 +1,162 @@
+@import "tailwindcss";
+
+@theme {
+  /* Premium Typography Scales */
+  --font-sans: 'Nunito', system-ui, -apple-system, sans-serif;
+  --font-display: 'Josefin Sans', sans-serif;
+  --font-rubik: 'Rubik', sans-serif;
+
+  /* Custom Color Palette (Premium construction & contracting brand colors) */
+  --color-primary-50: #fbf8f3;
+  --color-primary-100: #f4ebd9;
+  --color-primary-200: #e8d6b3;
+  --color-primary-300: #dbae7b;
+  --color-primary-400: #d09054;
+  --color-primary-500: #c5763a;
+  --color-primary-600: #b56030;
+  --color-primary-700: #974a27;
+  --color-primary-800: #7a3c23;
+  --color-primary-900: #63331f;
+  --color-primary-950: #36190f;
+
+  --color-accent-50: #fafaf9;
+  --color-accent-100: #f5f5f4;
+  --color-accent-200: #e7e5e4;
+  --color-accent-300: #d6d3d1;
+  --color-accent-400: #a8a29e;
+  --color-accent-500: #78716c;
+  --color-accent-600: #57524e;
+  --color-accent-700: #44403c;
+  --color-accent-800: #292524;
+  --color-accent-900: #1c1917;
+  --color-accent-950: #0c0a09;
+
+  /* Container Widths */
+  --width-container-sm: 640px;
+  --width-container-md: 768px;
+  --width-container-lg: 1024px;
+  --width-container-xl: 1280px;
+  --width-container-2xl: 1440px;
+
+  /* Custom Premium Animations */
+  --animate-fade-in: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-up: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-slide-in-right: slide-in-right 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-scale-up: scale-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-shimmer: shimmer 2.5s infinite linear;
+  --animate-tracking-in-contract: tracking-in-contract 1s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+
+  @keyframes tracking-in-contract {
+    0% {
+      letter-spacing: 0.8em;
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.6;
+    }
+    100% {
+      letter-spacing: 0.15em;
+      opacity: 1;
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slide-in-right {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes scale-up {
+    from { opacity: 0.95; transform: scale(0.98); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+}
+
+/* Enable class-based dark mode in Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  /* Custom premium scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  body.dark ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-accent-300);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-400);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  body.dark ::-webkit-scrollbar-thumb {
+    background: var(--color-accent-700);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  body.dark ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent-600);
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+/* Glassmorphism utility base styling */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.dark .glass {
+  background: rgba(12, 10, 9, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Modern grid dot pattern utility */
+.bg-dots {
+  background-image: radial-gradient(var(--color-accent-200) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.dark .bg-dots {
+  background-image: radial-gradient(var(--color-accent-800) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
