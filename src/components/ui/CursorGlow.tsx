@@ -24,10 +24,10 @@ export const CursorGlow: React.FC = () => {
 
   return (
     <motion.div
-      className="pointer-events-none fixed top-0 left-0 z-[45] rounded-full mix-blend-screen blur-[20px]"
+      className="pointer-events-none fixed top-0 left-0 z-[45] rounded-full"
       animate={{
-        x: mousePosition.x - 75, // Offset by half the width to center (150 / 2)
-        y: mousePosition.y - 75, // Offset by half the height to center
+        x: mousePosition.x - 20, // Offset by half the width to center (40 / 2)
+        y: mousePosition.y - 20, // Offset by half the height to center
       }}
       transition={{
         type: 'tween',
@@ -35,9 +35,10 @@ export const CursorGlow: React.FC = () => {
         duration: 0.15, // Very slight delay for smooth trailing effect
       }}
       style={{
-        width: 150,
-        height: 150,
-        background: 'radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%)',
+        width: 40,
+        height: 40,
+        border: '2px solid #8786db',
+        backgroundColor: 'transparent',
       }}
     />
   );
