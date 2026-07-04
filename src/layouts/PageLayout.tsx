@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Navbar } from '@/components/common/Navbar';
+import { CursorGlow } from '@/components/ui/CursorGlow';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
 
   return (
     <div className="flex flex-col min-h-screen">
+      <CursorGlow />
       {/* Navigation Header */}
       <Navbar />
 

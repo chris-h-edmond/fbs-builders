@@ -13,7 +13,7 @@ export const Logo: React.FC<LogoProps> = ({
   ...props
 }) => {
   return (
-    <div className={cn("select-none font-sans font-bold text-4xl sm:text-5xl lowercase tracking-tight", className)} {...props}>
+    <div className={cn("select-none font-sans font-bold text-6xl sm:text-7xl lowercase tracking-tight", className)} {...props}>
       fbs builders.
     </div>
   );
