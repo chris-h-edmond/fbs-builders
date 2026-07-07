@@ -3,6 +3,7 @@ import { Meta } from '@/components/common/Meta';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ProjectGridCell } from '@/components/ui/ProjectGridCell';
 import { Link } from 'react-router-dom';
+import { ReviewsCarousel } from '@/components/ui/ReviewsCarousel';
 
 // Import images
 import img1 from '@/assets/images/PS Tower.png';
@@ -46,17 +47,10 @@ export const Home: React.FC = () => {
             className="absolute inset-0 w-full h-full object-cover object-center"
           />
         </AnimatePresence>
-        
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-70">
-          <span className="text-white text-xs uppercase tracking-widest font-sans font-bold">Scroll</span>
-          <div className="w-[1px] h-12 bg-white/50 overflow-hidden relative">
-            <motion.div 
-              className="absolute top-0 left-0 w-full h-full bg-white"
-              animate={{ y: ['-100%', '100%'] }}
-              transition={{ repeat: Infinity, duration: 2, ease: 'linear' }}
-            />
-          </div>
+
+        {/* Reviews Carousel */}
+        <div className="absolute bottom-12 left-4 md:left-12 lg:left-24 z-10 w-[90%] md:w-full max-w-2xl pointer-events-auto">
+          <ReviewsCarousel />
         </div>
       </section>
 
