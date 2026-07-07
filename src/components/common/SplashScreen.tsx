@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Grainient } from '@/components/ui/Grainient/Grainient';
 
 interface SplashScreenProps {
@@ -7,43 +7,47 @@ interface SplashScreenProps {
 }
 
 export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
-  const [isExiting, setIsExiting] = useState(false);
+  const [phase, setPhase] = useState<'initial' | 'combining' | 'exiting'>('initial');
 
-  // Triggers the transition exit animation
   const handleDismiss = () => {
-    if (isExiting) return;
-    setIsExiting(true);
+    if (phase === 'exiting') return;
+    setPhase('exiting');
   };
 
   useEffect(() => {
-    // Prevent scrolling while splash screen is active
     document.body.style.overflow = 'hidden';
 
-    // Auto-dismiss after 5 seconds (5000ms delay) if not clicked
-    const autoDismissTimer = setTimeout(() => {
-      setIsExiting(true);
-    }, 5000);
+    // Start combining after 2.5 seconds
+    const combineTimer = setTimeout(() => {
+      setPhase('combining');
+    }, 2500);
+
+    // Auto-dismiss after 4.5 seconds if not clicked
+    const exitTimer = setTimeout(() => {
+      setPhase('exiting');
+    }, 4500);
 
     return () => {
       document.body.style.overflow = '';
-      clearTimeout(autoDismissTimer);
+      clearTimeout(combineTimer);
+      clearTimeout(exitTimer);
     };
   }, []);
 
   // Sync unmounting after the 1.1s exit transition completes
   useEffect(() => {
-    if (isExiting) {
+    if (phase === 'exiting') {
       const timer = setTimeout(() => {
         onComplete();
       }, 1100);
       return () => clearTimeout(timer);
     }
-  }, [isExiting, onComplete]);
+  }, [phase, onComplete]);
 
   return (
     <motion.div
-      initial={{ opacity: 1, scale: 1 }}
-      animate={isExiting ? { opacity: 0, scale: 0.98 } : { opacity: 1, scale: 1 }}
+      initial={{ opacity: 1 }}
+      animate={phase === 'exiting' ? { opacity: 0 } : { opacity: 1 }}
       transition={{ duration: 1.1, ease: [0.215, 0.610, 0.355, 1.000] }}
       onClick={handleDismiss}
       className="fixed inset-0 z-50 flex items-center justify-center bg-[#0E0E0E] text-[#FFFFFF] select-none overflow-hidden w-screen h-screen cursor-pointer"
@@ -77,16 +81,42 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
         />
       </div>
 
-      {/* Centered Typography revealing via tracking-in-contract */}
-      <div className="relative z-10 flex items-center justify-center px-6 text-center w-full">
-        <motion.h1
-          animate={isExiting ? { opacity: 0 } : { opacity: 1 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="font-semibold text-white tracking-widest text-4xl sm:text-6xl md:text-[72px] leading-tight select-none animate-tracking-in-contract lowercase"
-          style={{ fontFamily: "'Nunito', sans-serif" }}
-        >
-          fbs builders
-        </motion.h1>
+      <div className="relative z-10 w-full h-full flex px-6 text-center pointer-events-none">
+        <AnimatePresence>
+          {phase === 'initial' && (
+            <motion.div
+              key="full-text"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+              className="absolute inset-0 flex flex-col items-center justify-center gap-2"
+            >
+              <span className="text-white/70 text-sm md:text-base uppercase tracking-widest font-medium">
+                A venture by
+              </span>
+              <h1
+                className="font-semibold text-white text-3xl sm:text-5xl md:text-7xl leading-tight select-none animate-text-shadow-drop-bottom"
+                style={{ fontFamily: "'Nunito', sans-serif" }}
+              >
+                Fortune Business and Synthesis
+              </h1>
+            </motion.div>
+          )}
+          {phase !== 'initial' && (
+            <motion.div
+              key="fbs-builders"
+              initial={{ opacity: 0, scale: 1.2, x: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              transition={{ duration: 1.2, ease: [0.25, 1, 0.5, 1] }}
+              className="absolute top-8 left-8 md:top-12 md:left-12"
+            >
+              <h1 className="font-sans font-bold text-6xl sm:text-7xl lowercase tracking-tight select-none text-white">
+                fbs builders.
+              </h1>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.div>
   );
