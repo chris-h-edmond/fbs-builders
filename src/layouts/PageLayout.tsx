@@ -44,7 +44,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
         animate="animate"
         exit="exit"
         variants={pageTransition}
-        className="flex-grow pt-24" // Spacing padding to prevent overlaps from sticky header
+        className="flex-grow"
       >
         {children}
       </motion.main>
