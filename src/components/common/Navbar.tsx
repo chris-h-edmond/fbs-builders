@@ -3,7 +3,9 @@ import { NavLink, Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { Logo } from './Logo';
+import { Menu, X } from 'lucide-react';
 import { NAVIGATION_LINKS } from '@/constants';
+import { AnimatePresence } from 'framer-motion';
 
 /**
  * Global Navigation Header Component.
@@ -11,6 +13,12 @@ import { NAVIGATION_LINKS } from '@/constants';
  */
 export const Navbar: React.FC = () => {
   const { scrollY } = useScroll();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+  // Close mobile menu when route changes
+  React.useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, []);
 
   // Fade out initial elements between 0px and 300px
   const initialOpacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -37,14 +45,23 @@ export const Navbar: React.FC = () => {
 
         {/* Right Side */}
         <div className="flex flex-col items-end">
-          <Link
-            to="/contact"
-            className="px-6 py-2 text-lg md:text-3xl rounded-full bg-white text-black font-bold tracking-wide hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-          >
-            Book a Call
-          </Link>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="md:hidden text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+              aria-label="Open mobile menu"
+            >
+              <Menu size={28} />
+            </button>
+            <Link
+              to="/contact"
+              className="hidden sm:inline-flex px-4 py-2 text-sm md:px-6 md:py-2 md:text-3xl rounded-full bg-white text-black font-bold tracking-wide hover:scale-105 transition-all duration-300 shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+            >
+              Book a Call
+            </Link>
+          </div>
 
-          <nav className="flex flex-col gap-4 mt-4 items-end" aria-label="Main Navigation">
+          <nav className="hidden md:flex flex-col gap-4 mt-4 items-end" aria-label="Main Navigation">
             {NAVIGATION_LINKS.filter(link => link.label.toLowerCase() !== 'contact').map((link) => (
               <NavLink
                 key={link.href}
@@ -65,6 +82,50 @@ export const Navbar: React.FC = () => {
         </div>
       </motion.header>
 
+      {/* --- MOBILE OVERLAY MENU --- */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-3xl flex flex-col items-center justify-center"
+          >
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-8 right-8 text-white/70 hover:text-white p-2"
+              aria-label="Close menu"
+            >
+              <X size={40} />
+            </button>
+            <nav className="flex flex-col items-center gap-8" aria-label="Mobile Navigation">
+              {NAVIGATION_LINKS.filter(link => link.label.toLowerCase() !== 'contact').map((link) => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    cn(
+                      'text-4xl font-bold lowercase tracking-wide transition-all duration-300',
+                      isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                    )
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+              <Link
+                to="/contact"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="mt-4 px-8 py-3 rounded-full bg-white text-black font-bold tracking-wide text-2xl hover:scale-105 transition-transform duration-300"
+              >
+                Book a Call
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* --- SCROLLED STATE (Pill Navigation) --- */}
       <motion.div
         style={{ opacity: scrolledOpacity, y: scrolledY, pointerEvents: pointerEventsScrolled as any }}
@@ -77,14 +138,14 @@ export const Navbar: React.FC = () => {
           </Link>
 
           {/* Links */}
-          <nav className="flex items-center gap-1 sm:gap-2">
+          <nav className="flex items-center gap-1 sm:gap-2 overflow-x-auto no-scrollbar max-w-full">
             {NAVIGATION_LINKS.filter(link => link.label.toLowerCase() !== 'contact').map((link) => (
               <NavLink
                 key={link.href}
                 to={link.href}
                 className={({ isActive }) =>
                   cn(
-                    'px-4 py-2 rounded-full font-bold lowercase tracking-wide text-sm transition-all duration-300',
+                    'hidden md:inline-flex px-4 py-2 rounded-full font-bold lowercase tracking-wide text-sm whitespace-nowrap transition-all duration-300',
                     isActive
                       ? 'bg-white text-black'
                       : 'text-white/80 hover:text-white hover:bg-white/10'
@@ -96,7 +157,7 @@ export const Navbar: React.FC = () => {
             ))}
             <Link
               to="/contact"
-              className="ml-2 px-5 py-2 rounded-full bg-white text-black font-bold tracking-wide text-sm hover:scale-105 transition-transform duration-300"
+              className="ml-2 px-5 py-2 rounded-full bg-white text-black font-bold tracking-wide text-sm whitespace-nowrap hover:scale-105 transition-transform duration-300"
             >
               Book a Call
             </Link>

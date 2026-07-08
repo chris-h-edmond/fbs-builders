@@ -49,18 +49,18 @@ export const Home: React.FC = () => {
         </AnimatePresence>
 
         {/* Reviews Carousel */}
-        <div className="absolute bottom-12 left-4 md:left-12 lg:left-24 z-10 w-[90%] md:w-full max-w-2xl pointer-events-auto">
+        <div className="absolute bottom-4 md:bottom-12 left-4 md:left-12 lg:left-24 z-10 w-[90%] md:w-full max-w-2xl pointer-events-auto">
           <ReviewsCarousel />
         </div>
       </section>
 
       {/* 2nd Section: Main Page Grid */}
-      <section className="w-full min-h-screen bg-[#0E0E0E] p-8 md:p-12 lg:p-24 flex items-center justify-center">
+      <section className="w-full min-h-screen bg-[#0E0E0E] p-4 md:p-12 lg:p-24 flex items-center justify-center">
         {/* Masonry Flex Container matching sketch */}
-        <div className="flex flex-col md:flex-row w-full aspect-[16/10] max-w-[1800px] gap-6">
+        <div className="flex flex-col md:flex-row w-full md:aspect-[16/10] max-w-[1800px] gap-6">
           
           {/* Left Column (~35%) */}
-          <div className="flex-1 flex flex-col gap-6 min-h-[400px]">
+          <div className="flex-1 flex flex-col gap-6 min-h-[500px] md:min-h-0">
             {/* Top Half */}
             <div className="flex-1 flex gap-6">
               <ProjectGridCell imageA={img1} imageB={img5} className="flex-1 rounded-3xl bg-neutral-900/50" />
@@ -71,7 +71,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Middle Column (~35%) */}
-          <div className="flex-1 flex flex-col gap-6 min-h-[400px]">
+          <div className="flex-1 flex flex-col gap-6 min-h-[600px] md:min-h-0">
             {/* Top Large Square */}
             <ProjectGridCell imageA={img4} imageB={img1} className="flex-[2] rounded-3xl bg-neutral-900/50" />
             {/* Middle Row of 3 */}
@@ -85,12 +85,12 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Right Column (~30%) */}
-          <div className="flex-[0.8] flex flex-col gap-6 min-h-[400px]">
+          <div className="flex-[0.8] flex flex-col gap-6 min-h-[500px] md:min-h-0">
             {/* Top Large Rectangle with Button */}
-            <ProjectGridCell imageA={img3} imageB={img7} className="flex-[2] rounded-3xl bg-neutral-900/50">
+            <ProjectGridCell imageA={img3} imageB={img7} className="flex-[2] min-h-[250px] md:min-h-0 rounded-3xl bg-neutral-900/50">
               <Link 
                 to="/projects" 
-                className="pointer-events-auto font-sans font-bold text-4xl sm:text-5xl lg:text-6xl lowercase tracking-tight text-white hover:opacity-70 transition-opacity drop-shadow-lg"
+                className="pointer-events-auto font-sans font-bold text-3xl sm:text-5xl lg:text-6xl lowercase tracking-tight text-white hover:opacity-70 transition-opacity drop-shadow-lg"
               >
                 view all projects.
               </Link>

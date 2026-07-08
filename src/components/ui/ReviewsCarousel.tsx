@@ -60,7 +60,7 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
         className
       )}
     >
-      <div className="flex items-center gap-4 sm:gap-8 px-4 sm:px-8 py-6">
+      <div className="flex items-center gap-2 sm:gap-8 px-2 sm:px-8 py-4 sm:py-6">
         {/* Left Arrow */}
         <button 
           onClick={handlePrev}
@@ -93,11 +93,10 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
           </div>
 
           {/* Review Text Area */}
-          <div className="relative w-full px-8 md:px-12 min-h-[100px] flex items-center justify-center">
+          <div className="relative w-full px-6 md:px-12 min-h-[100px] flex items-center justify-center">
             {/* Opening Quote */}
             <Quote 
-              className="absolute top-0 left-0 text-white/30 rotate-180" 
-              size={36} 
+              className="absolute top-0 left-0 text-white/30 rotate-180 w-6 h-6 md:w-9 md:h-9" 
             />
             
             <AnimatePresence mode="wait">
@@ -115,8 +114,7 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
 
             {/* Closing Quote */}
             <Quote 
-              className="absolute bottom-0 right-0 text-white/30" 
-              size={36} 
+              className="absolute bottom-0 right-0 text-white/30 w-6 h-6 md:w-9 md:h-9" 
             />
           </div>
 
