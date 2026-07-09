@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowLeft, ArrowRight } from 'lucide-react';
 import { cn } from '@/utils/cn';
+import { Link } from 'react-router-dom';
 
 // Import images
 import img1 from '@/assets/images/PS Tower.png';
@@ -135,12 +136,20 @@ export const FeaturedProjectsGrid: React.FC = () => {
     <section className="w-full bg-[#0E0E0E] py-12 md:py-16 px-4 md:px-12 lg:px-24 flex flex-col items-center justify-center min-h-screen z-20 relative">
       <div className="w-full max-w-[1800px] flex flex-col justify-center h-full">
         {/* Header */}
-        <h2 
-          className="text-white text-4xl md:text-5xl lg:text-6xl font-bold lowercase tracking-tight mb-8 md:mb-12 select-none"
-          style={{ fontFamily: "'Nunito', sans-serif" }}
-        >
-          featured projects
-        </h2>
+        <div className="flex items-center justify-between mb-8 md:mb-12">
+          <h2 
+            className="text-white text-4xl md:text-5xl lg:text-6xl font-bold lowercase tracking-tight select-none"
+            style={{ fontFamily: "'Nunito', sans-serif" }}
+          >
+            featured projects
+          </h2>
+          <Link 
+            to="/projects"
+            className="inline-flex px-4 py-2 sm:px-6 sm:py-2.5 rounded-full font-bold lowercase tracking-wide text-sm md:text-base whitespace-nowrap text-white/80 hover:text-white hover:bg-white/10 transition-all duration-300"
+          >
+            view all
+          </Link>
+        </div>
 
         {/* 3x2 Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full">
@@ -173,28 +182,27 @@ export const FeaturedProjectsGrid: React.FC = () => {
       {/* Project Modal (Glassmorphism Popup) */}
       <AnimatePresence>
         {selectedProject && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-12"
-          >
-            {/* Blurred Backdrop */}
-            <div 
-              className="absolute inset-0 bg-black/40 backdrop-blur-md cursor-pointer"
+          <React.Fragment key="project-modal">
+            {/* Blurred Backdrop - Independent of modal content scaling */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 z-[90] bg-black/50 backdrop-blur-lg cursor-pointer"
               onClick={handleCloseModal}
             />
 
-            {/* Modal Content */}
-            <motion.div
-              initial={{ scale: 0.95, y: 20, opacity: 0 }}
-              animate={{ scale: 1, y: 0, opacity: 1 }}
-              exit={{ scale: 0.95, y: 20, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="relative w-full max-w-6xl max-h-full overflow-y-auto bg-black/40 backdrop-blur-xl border border-white/20 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row"
-              onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
-            >
+            {/* Modal Content Container */}
+            <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 md:p-12 pointer-events-none">
+              <motion.div
+                initial={{ scale: 0.95, y: 20, opacity: 0 }}
+                animate={{ scale: 1, y: 0, opacity: 1 }}
+                exit={{ scale: 0.95, y: 20, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative w-full max-w-6xl max-h-full overflow-y-auto bg-black/40 border border-white/20 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row pointer-events-auto"
+                onClick={(e) => e.stopPropagation()} // Prevent clicks inside modal from closing it
+              >
               {/* Close Button */}
               <button 
                 onClick={handleCloseModal}
@@ -275,7 +283,8 @@ export const FeaturedProjectsGrid: React.FC = () => {
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+            </div>
+          </React.Fragment>
         )}
       </AnimatePresence>
     </section>
