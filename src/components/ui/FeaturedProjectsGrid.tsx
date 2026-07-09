@@ -133,7 +133,7 @@ export const FeaturedProjectsGrid: React.FC = () => {
   };
 
   return (
-    <section className="w-full bg-[#0E0E0E] py-12 md:py-16 px-4 md:px-12 lg:px-24 flex flex-col items-center justify-center min-h-screen z-20 relative snap-start">
+    <section id="featured-projects" className="w-full bg-[#0E0E0E] py-12 md:py-16 px-4 md:px-12 lg:px-24 flex flex-col items-center justify-center min-h-screen z-20 relative">
       <div className="w-full max-w-[1800px] flex flex-col justify-center h-full">
         {/* Header */}
         <div className="flex items-center justify-between mb-8 md:mb-12">

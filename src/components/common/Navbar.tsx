@@ -20,6 +20,19 @@ export const Navbar: React.FC = () => {
     setIsMobileMenuOpen(false);
   }, []);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.includes('#')) {
+      const id = href.split('#')[1];
+      const element = document.getElementById(id);
+      if (element) {
+        e.preventDefault();
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', href);
+      }
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   // Fade out initial elements between 0px and 300px
   const initialOpacity = useTransform(scrollY, [0, 300], [1, 0]);
   const pointerEventsInitial = useTransform(scrollY, [0, 300], ['auto', 'none']);
@@ -66,6 +79,7 @@ export const Navbar: React.FC = () => {
               <NavLink
                 key={link.href}
                 to={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={({ isActive }) =>
                   cn(
                     'text-2xl md:text-4xl font-bold lowercase tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-sm origin-right',
@@ -103,7 +117,7 @@ export const Navbar: React.FC = () => {
                 <NavLink
                   key={link.href}
                   to={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => handleNavClick(e, link.href)}
                   className={({ isActive }) =>
                     cn(
                       'text-4xl font-bold lowercase tracking-wide transition-all duration-300',
@@ -143,6 +157,7 @@ export const Navbar: React.FC = () => {
               <NavLink
                 key={link.href}
                 to={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={({ isActive }) =>
                   cn(
                     'hidden md:inline-flex px-4 py-2 rounded-full font-bold lowercase tracking-wide text-sm whitespace-nowrap transition-all duration-300',
