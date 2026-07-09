@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Meta } from '@/components/common/Meta';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ProjectGridCell } from '@/components/ui/ProjectGridCell';
-import { Link } from 'react-router-dom';
 import { ReviewsCarousel } from '@/components/ui/ReviewsCarousel';
+import { FeaturedProjectsGrid } from '@/components/ui/FeaturedProjectsGrid';
 
 // Import images
 import img1 from '@/assets/images/PS Tower.png';
@@ -54,53 +53,9 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 2nd Section: Main Page Grid */}
-      <section className="w-full min-h-screen bg-[#0E0E0E] p-4 md:p-12 lg:p-24 flex items-center justify-center">
-        {/* Masonry Flex Container matching sketch */}
-        <div className="flex flex-col md:flex-row w-full md:aspect-[16/10] max-w-[1800px] gap-6">
-          
-          {/* Left Column (~35%) */}
-          <div className="flex-1 flex flex-col gap-6 min-h-[500px] md:min-h-0">
-            {/* Top Half */}
-            <div className="flex-1 flex gap-6">
-              <ProjectGridCell imageA={img1} imageB={img5} className="flex-1 rounded-3xl bg-neutral-900/50" />
-              <ProjectGridCell imageA={img3} imageB={img6} className="flex-1 rounded-3xl bg-neutral-900/50" />
-            </div>
-            {/* Bottom Half */}
-            <ProjectGridCell imageA={img2} imageB={img7} className="flex-1 rounded-3xl bg-neutral-900/50" />
-          </div>
+      {/* 2nd Section: Featured Projects */}
+      <FeaturedProjectsGrid />
 
-          {/* Middle Column (~35%) */}
-          <div className="flex-1 flex flex-col gap-6 min-h-[600px] md:min-h-0">
-            {/* Top Large Square */}
-            <ProjectGridCell imageA={img4} imageB={img1} className="flex-[2] rounded-3xl bg-neutral-900/50" />
-            {/* Middle Row of 3 */}
-            <div className="flex-none h-1/4 min-h-[100px] flex gap-6">
-              <ProjectGridCell imageA={img5} imageB={img2} className="flex-1 rounded-3xl bg-neutral-900/50" />
-              <ProjectGridCell imageA={img7} imageB={img3} className="flex-1 rounded-3xl bg-neutral-900/50" />
-              <ProjectGridCell imageA={img1} imageB={img6} className="flex-1 rounded-3xl bg-neutral-900/50" />
-            </div>
-            {/* Bottom Rectangle */}
-            <ProjectGridCell imageA={img6} imageB={img4} className="flex-1 rounded-3xl bg-neutral-900/50" />
-          </div>
-
-          {/* Right Column (~30%) */}
-          <div className="flex-[0.8] flex flex-col gap-6 min-h-[500px] md:min-h-0">
-            {/* Top Large Rectangle with Button */}
-            <ProjectGridCell imageA={img3} imageB={img7} className="flex-[2] min-h-[250px] md:min-h-0 rounded-3xl bg-neutral-900/50">
-              <Link 
-                to="/projects" 
-                className="pointer-events-auto font-sans font-bold text-3xl sm:text-5xl lg:text-6xl lowercase tracking-tight text-white hover:opacity-70 transition-opacity drop-shadow-lg"
-              >
-                view all projects.
-              </Link>
-            </ProjectGridCell>
-            {/* Bottom Large Rectangle */}
-            <ProjectGridCell imageA={img2} imageB={img5} className="flex-[1.5] rounded-3xl bg-neutral-900/50" />
-          </div>
-
-        </div>
-      </section>
     </div>
   );
 };
