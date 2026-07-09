@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { cn } from '@/utils/cn';
 import { Logo } from './Logo';
@@ -13,7 +13,25 @@ import { AnimatePresence } from 'framer-motion';
  */
 export const Navbar: React.FC = () => {
   const { scrollY } = useScroll();
+  const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+
+  const checkIsActive = (href: string, defaultIsActive: boolean) => {
+    if (href.includes('#')) {
+      return location.pathname + location.hash === href;
+    }
+    return defaultIsActive;
+  };
+
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (location.hash) {
+        window.history.pushState(null, '', '/');
+      }
+    }
+  };
 
   // Close mobile menu when route changes
   React.useEffect(() => {
@@ -51,7 +69,7 @@ export const Navbar: React.FC = () => {
       >
         {/* Brand Logo (Left) */}
         <div>
-          <Link to="/" aria-label="FBS Builders Home" className="focus-visible:outline-none text-white hover:opacity-90 transition-opacity">
+          <Link to="/" onClick={handleLogoClick} aria-label="FBS Builders Home" className="focus-visible:outline-none text-white hover:opacity-90 transition-opacity">
             <Logo />
           </Link>
         </div>
@@ -83,7 +101,7 @@ export const Navbar: React.FC = () => {
                 className={({ isActive }) =>
                   cn(
                     'text-2xl md:text-4xl font-bold lowercase tracking-wide transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 rounded-sm origin-right',
-                    isActive
+                    checkIsActive(link.href, isActive)
                       ? 'text-white opacity-100 scale-105'
                       : 'text-white/70 hover:text-white hover:opacity-100 hover:scale-105'
                   )
@@ -121,7 +139,7 @@ export const Navbar: React.FC = () => {
                   className={({ isActive }) =>
                     cn(
                       'text-4xl font-bold lowercase tracking-wide transition-all duration-300',
-                      isActive ? 'text-white' : 'text-white/70 hover:text-white'
+                      checkIsActive(link.href, isActive) ? 'text-white' : 'text-white/70 hover:text-white'
                     )
                   }
                 >
@@ -147,7 +165,7 @@ export const Navbar: React.FC = () => {
       >
         <div className="flex items-center justify-between bg-black/60 backdrop-blur-xl border border-white/10 px-6 py-3 rounded-full shadow-2xl">
           {/* Logo */}
-          <Link to="/" className="text-white font-sans font-bold text-2xl lowercase tracking-tight hover:opacity-80 transition-opacity">
+          <Link to="/" onClick={handleLogoClick} className="text-white font-sans font-bold text-2xl lowercase tracking-tight hover:opacity-80 transition-opacity">
             fbs
           </Link>
 
@@ -161,7 +179,7 @@ export const Navbar: React.FC = () => {
                 className={({ isActive }) =>
                   cn(
                     'hidden md:inline-flex px-4 py-2 rounded-full font-bold lowercase tracking-wide text-sm whitespace-nowrap transition-all duration-300',
-                    isActive
+                    checkIsActive(link.href, isActive)
                       ? 'bg-white text-black'
                       : 'text-white/80 hover:text-white hover:bg-white/10'
                   )
