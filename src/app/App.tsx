@@ -1,9 +1,11 @@
-import React, { Suspense, lazy, useState } from 'react';
+import React, { Suspense, lazy, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PageLayout } from '@/layouts/PageLayout';
 import { Loader } from '@/components/ui/Loader';
 import { SplashScreen } from '@/components/common/SplashScreen';
 import { AnimatePresence } from 'framer-motion';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 
 // Lazy loading pages for optimized bundle splitting & faster initial loads
 const Home = lazy(() => import('@/pages/Home'));
@@ -18,6 +20,24 @@ const NotFound = lazy(() => import('@/pages/NotFound'));
  */
 export const App: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
+
+  // Initialize Lenis smooth scroll
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <>
