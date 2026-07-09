@@ -32,14 +32,16 @@ const REVIEWS = [
 
 export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Auto-advance reviews
   useEffect(() => {
+    if (isHovered) return;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % REVIEWS.length);
     }, 8000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isHovered, currentIndex]);
 
   const handleNext = () => {
     setCurrentIndex((prev) => (prev + 1) % REVIEWS.length);
@@ -59,12 +61,14 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
         "bg-[radial-gradient(50%_50%_at_50%_50%,rgba(0,0,0,0.6)_0%,rgba(0,0,0,0)_100%)]",
         className
       )}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="flex items-center gap-2 sm:gap-8 px-2 sm:px-8 py-4 sm:py-6">
+      <div className="flex items-center gap-2 sm:gap-8 px-2 sm:px-8 py-4 sm:py-6 relative z-20">
         {/* Left Arrow */}
         <button 
           onClick={handlePrev}
-          className="text-white/60 hover:text-white transition-colors focus:outline-none flex-shrink-0"
+          className="text-white/60 hover:text-white transition-colors focus:outline-none flex-shrink-0 cursor-pointer pointer-events-auto"
           aria-label="Previous review"
         >
           <ArrowLeft size={32} strokeWidth={1.5} />
@@ -93,7 +97,7 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
           </div>
 
           {/* Review Text Area */}
-          <div className="relative w-full px-6 md:px-12 min-h-[100px] flex items-center justify-center">
+          <div className="relative w-full px-6 md:px-12 min-h-[100px] flex items-center justify-center pointer-events-none">
             {/* Opening Quote */}
             <Quote 
               className="absolute top-0 left-0 text-white/30 rotate-180 w-6 h-6 md:w-9 md:h-9" 
@@ -106,7 +110,7 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.5 }}
-                className="text-white/90 text-lg md:text-xl text-center leading-relaxed font-medium"
+                className="text-white/90 text-lg md:text-xl text-center leading-relaxed font-medium pointer-events-auto"
               >
                 {currentReview.text}
               </motion.p>
@@ -126,7 +130,7 @@ export const ReviewsCarousel: React.FC<{ className?: string }> = ({ className })
         {/* Right Arrow */}
         <button 
           onClick={handleNext}
-          className="text-white/60 hover:text-white transition-colors focus:outline-none flex-shrink-0"
+          className="text-white/60 hover:text-white transition-colors focus:outline-none flex-shrink-0 cursor-pointer pointer-events-auto"
           aria-label="Next review"
         >
           <ArrowRight size={32} strokeWidth={1.5} />
