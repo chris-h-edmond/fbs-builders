@@ -25,12 +25,12 @@ export const App: React.FC = () => {
   useEffect(() => {
     const lenis = new Lenis({
       autoRaf: true,
-      duration: 1.2,
+      duration: 0.85, // Made slightly snappier (was 1.2)
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
-      wheelMultiplier: 1,
+      wheelMultiplier: 1.1, // Slight boost to responsiveness
       touchMultiplier: 2,
     });
 

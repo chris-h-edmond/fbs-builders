@@ -19,10 +19,17 @@ export const Home: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
+    // Enable scroll snapping only on the home page
+    document.documentElement.classList.add('snap-y', 'snap-mandatory');
+    
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % sliderImages.length);
     }, 6000); // Crossfade every 6 seconds
-    return () => clearInterval(timer);
+    
+    return () => {
+      clearInterval(timer);
+      document.documentElement.classList.remove('snap-y', 'snap-mandatory');
+    };
   }, []);
 
   return (
@@ -33,7 +40,7 @@ export const Home: React.FC = () => {
       />
       
       {/* 1st Section: Immersive Fullscreen Background Slider */}
-      <section className="relative w-full h-screen overflow-hidden bg-black">
+      <section className="relative w-full h-screen overflow-hidden bg-black snap-start">
         <AnimatePresence mode="popLayout">
           <motion.img
             key={currentIndex}
