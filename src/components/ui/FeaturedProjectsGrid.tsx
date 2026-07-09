@@ -132,22 +132,22 @@ export const FeaturedProjectsGrid: React.FC = () => {
   };
 
   return (
-    <section className="w-full bg-[#0E0E0E] py-24 px-4 md:px-12 lg:px-24 flex flex-col items-center z-20 relative">
-      <div className="w-full max-w-[1800px]">
+    <section className="w-full bg-[#0E0E0E] py-12 md:py-16 px-4 md:px-12 lg:px-24 flex flex-col items-center justify-center min-h-screen z-20 relative">
+      <div className="w-full max-w-[1800px] flex flex-col justify-center h-full">
         {/* Header */}
         <h2 
-          className="text-white text-5xl md:text-6xl font-bold lowercase tracking-tight mb-16 select-none"
+          className="text-white text-4xl md:text-5xl lg:text-6xl font-bold lowercase tracking-tight mb-8 md:mb-12 select-none"
           style={{ fontFamily: "'Nunito', sans-serif" }}
         >
           featured projects
         </h2>
 
         {/* 3x2 Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 lg:gap-12 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 lg:gap-8 w-full">
           {FEATURED_PROJECTS.map((project) => (
             <div 
               key={project.id}
-              className="group relative aspect-square md:aspect-[4/3] lg:aspect-[4/3] rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-white/30 transition-colors duration-500 bg-neutral-900"
+              className="group relative aspect-square md:aspect-[4/3] lg:aspect-video rounded-xl overflow-hidden cursor-pointer border border-white/10 hover:border-white/30 transition-colors duration-500 bg-neutral-900"
               onClick={() => handleOpenModal(project)}
             >
               {/* Project Image */}
@@ -160,7 +160,7 @@ export const FeaturedProjectsGrid: React.FC = () => {
               {/* Hover Overlay */}
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-center justify-center backdrop-blur-[2px]">
                 <div 
-                  className="text-white text-lg md:text-xl font-bold tracking-wide border border-white/40 px-6 py-3 rounded-full bg-black/30 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
+                  className="text-white text-base md:text-lg font-bold tracking-wide border border-white/40 px-6 py-2 md:py-3 rounded-full bg-black/30 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500"
                 >
                   Click to know more
                 </div>
